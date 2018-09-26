@@ -1,0 +1,7 @@
+default['vscode']['rhel']['repository'] = 'https://packages.microsoft.com/yumrepos/vscode'
+default['vscode']['rhel']['name'] = 'code'
+default['vscode']['deb']['repository'] = 'https://packages.microsoft.com/repos/vscode stable main'
+default['vscode']['deb']['name'] = 'code'
+default['vscode']['win']['name'] = 'vscode'
+default['vscode']['osx']['name'] = 'visual-studio-code'
+default['vscode']['signing_key'] = 'https://packages.microsoft.com/keys/microsoft.asc'

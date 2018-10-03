@@ -10,4 +10,6 @@ Pre-release.
   - Can install extensions
   - Can upgrade extensions
   - Can uninstall extensions
-
+- Added installation management
+  - Can install vscode and related repository
+  - Can uninstall vscode and related repository

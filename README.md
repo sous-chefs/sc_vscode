@@ -24,3 +24,11 @@ Installs or uninstalls extensions
 #### Properties
 
 - `extension_name` - (Required) name attribute, String, The name of the extension you wish to install/uninstall
+
+### installer
+
+Installs or uninstalls visual studio code 
+
+#### Actions
+- `:install` - installs visual studio code and any required repositories 
+- `:uninstall` - uninstalls visual studio code and any required repositories

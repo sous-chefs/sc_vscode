@@ -24,6 +24,15 @@ module Vscode
   module Helper
     include Chef::Mixin::ShellOut
 
+    def code_installer_name
+      case node['os']
+      when 'linux'
+        'code'
+      else
+        'vscode'
+      end
+    end
+
     def code_installed?
       !code_version.nil?
     end

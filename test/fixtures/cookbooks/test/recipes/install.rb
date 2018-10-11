@@ -10,4 +10,3 @@ execute 'install' do
   command "code --install-extension rebornix.ruby"
   user 'vagrant'
 end
-

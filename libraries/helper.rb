@@ -1,9 +1,9 @@
 #
-# Author:: Jason Field (<jason@avon-lea.co.uk>)
+# Author:: Xorima
 # Cookbook:: vscode
-# Library:: powershell_helper
+# Library:: vscode_helper
 #
-# Copyright:: 2018, Jason Field
+# Copyright:: 2018, Sous-Chefs
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,13 +39,14 @@ module Vscode
       nil
     end
 
-    def code_installed_packages
-      cmd = shell_out("#{interpreter} --list-extensions --show-versions")
-      extensions = cmd.stdout.split("\n")
+    def code_installed_packages(user)
+      cmd = Mixlib::ShellOut.new("#{interpreter} --list-extensions --show-versions", :user => user)
+      cmdres = cmd.run_command
+      extensions = cmdres.stdout.split("\n")
       result = {}
       extensions.each do |e|
         info = e.split('@')
-        name = info[0]
+        name = info[0].downcase
         version = info[1]
         result[name] = version
       end
@@ -54,56 +55,63 @@ module Vscode
       nil
     end
 
-    def code_package_installed?(package)
-      extensions = code_installed_packages
-      if extensions[package]
+    def code_package_installed?(package, user)
+      extensions = code_installed_packages(user)
+      if extensions[package.downcase]
         # We have found the package, return the name
-        package
+        true
+      else
+        false
       end
     rescue
       nil
     end
 
-    def code_install_package(package)
-      packages = code_installed_packages
-      if packages[package]
+    def code_install_package(package, user)
+      installed = code_package_installed?(package, user)
+      Chef::Log.error(installed)
+      if installed
         Chef::Log.info("Nothing to do, extension #{package} installed")
       else
-        cmd = shell_out("#{interpreter} --install-extension #{package}")
-        if cmd.stdout.include?('successfully installed')
+        cmd = Mixlib::ShellOut.new("#{interpreter} --install-extension #{package}", :user => user)
+        cmdres = cmd.run_command
+        Chef::Log.error("#{interpreter} --install-extension #{package} user= #{user}")
+        Chef::Log.error(cmdres.stdout.to_s)
+        if cmdres.stdout.include?('successfully installed')
           Chef::Log.info("#{package} installed")
         else
-          Chef::Log.error("Error installing extension: #{package}")
+          raise("Error installing extension: #{package} for #{user}")
         end
-
       end
     end
 
-    def code_uninstall_package(package)
-      packages = code_installed_packages
-      if packages[package]
-        cmd = shell_out("#{interpreter} --uninstall-extension #{package}")
-        if cmd.stdout.include?('successfully uninstalled')
+    def code_uninstall_package(package, user)
+      installed = code_package_installed?(package, user)
+      if installed
+        cmd = Mixlib::ShellOut.new("#{interpreter} --uninstall-extension #{package}", :user => user)
+        cmdres = cmd.run_command
+        if cmdres.stdout.include?('successfully uninstalled')
           Chef::Log.info("#{package} uninstalled")
         else
-          Chef::Log.error("Error uninstalling extension: #{package}")
+          raise("Error uninstalling extension: #{package}")
         end
       else
         Chef::Log.info("Nothing to do, #{package} not installed")
       end
     end
 
-    def code_upgrade_package(package)
+    def code_upgrade_package(package, user)
       # We are unable to upgrade the package directly at the moment
       # See: https://github.com/Microsoft/vscode/issues/45072
       # and https://github.com/Microsoft/vscode/issues/56578
       # for now we will uninstall and reinstall and check version numbers
-      packages = code_installed_packages
+      packages = code_installed_packages(user)
+      package = package.downcase
       if packages[package]
         previous_version = packages[package]
         code_uninstall_package(package)
         code_install_package(package)
-        packages = code_installed_packages
+        packages = code_installed_packages(user)
         new_version = packages[package]
         if previous_version == new_version
           # packages match so we want to show as no converge

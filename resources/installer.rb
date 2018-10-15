@@ -13,7 +13,7 @@ action :install do
       gpgcheck    true
       gpgkey      signing_key
     end
-    if node['platform_family'] ==  'amazon'
+    if node['platform_family'] == 'amazon'
     # Requirement for debian
     package 'epel-release' do
       action :install

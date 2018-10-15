@@ -21,6 +21,7 @@
 require 'chef/mixin/shell_out'
 
 module Vscode
+  # helper functions for vscode
   module Helper
     include Chef::Mixin::ShellOut
 
@@ -38,14 +39,13 @@ module Vscode
     end
 
     def code_command(command, user)
-      full_command = "#{interpreter} #{command}"
-      cmd = Mixlib::ShellOut.new("export HOME=/home/#{user} && #{full_command}", user: user)
+      cmd = Mixlib::ShellOut.new(
+        "export HOME=/home/#{user} && #{interpreter} #{command}",
+        user: user
+      )
       cmdres = cmd.run_command
-      if cmdres.error!
-        raise("Error running #{full_command} for user: #{user} stdout:#{cmdres.stdout}, stderr: #{cmdres.stderr}")
-      else
-        return cmdres
-      end
+      raise("Error in #{interpreter} #{command} for #{user}") if cmdres.error!
+      cmdres
     end
 
     def code_installed_packages(user)
@@ -80,11 +80,10 @@ module Vscode
         Chef::Log.info("Nothing to do, extension #{package} installed")
       else
         cmdres = code_command("--install-extension #{package}", user)
-        if cmdres.stdout.include?('successfully installed')
-          Chef::Log.info("#{package} installed")
-        else
-          raise("Error installing extension: #{package} for #{user}")
-        end
+        Chef::Log.info("#{package} installed") if cmdres.stdout.include?(
+          'successfully installed'
+        )
+        raise("Error installing extension: #{package} for #{user}")
       end
     end
 
@@ -92,12 +91,10 @@ module Vscode
       installed = code_package_installed?(package, user)
       if installed
         cmdres = code_command("--uninstall-extension #{package}", user)
-
-        if cmdres.stdout.include?('successfully uninstalled')
-          Chef::Log.info("#{package} uninstalled")
-        else
-          raise("Error uninstalling extension: #{package}")
-        end
+        Chef::Log.info("#{package} uninstalled") if cmdres.stdout.include?(
+          'successfully uninstalled'
+        )
+        raise("Error uninstalling extension: #{package}")
       else
         Chef::Log.info("Nothing to do, #{package} not installed")
       end

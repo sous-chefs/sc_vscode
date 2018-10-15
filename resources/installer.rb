@@ -2,10 +2,11 @@
 
 include Vscode::Helper
 
+signing_key = 'https://packages.microsoft.com/keys/microsoft.asc'
+
 action :install do
-  signing_key = 'https://packages.microsoft.com/keys/microsoft.asc'
   case node['platform_family']
-  when 'rhel', 'fedora', 'amazon'
+  when 'rhel', 'fedora'
     yum_repository 'vscode' do
       description 'Visual Studio Code'
       baseurl     'https://packages.microsoft.com/yumrepos/vscode'
@@ -13,11 +14,7 @@ action :install do
       gpgcheck    true
       gpgkey      signing_key
     end
-    if node['platform_family'] == 'amazon'
-      package 'epel-release' do
-        action :install
-      end
-    end
+
   when 'debian'
     apt_repository 'vscode' do
       uri           'https://packages.microsoft.com/repos/vscode'
@@ -26,7 +23,6 @@ action :install do
       distribution  'stable'
       key           signing_key
     end
-    # Requirement for debian
     package 'apt-transport-https' do
       action :install
     end

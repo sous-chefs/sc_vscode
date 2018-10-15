@@ -1,9 +1,8 @@
-# frozen_string_literal: true
 vscode_installer 'install' do
 end
 
 # We need a couple prereqs for testing as servers do not have a GUI,
-# this is not expected in live, as no one would install vscode without a GUI right?
+# this is not expected in live, as no one would install vscode without a GUI?
 case node[:platform]
 when 'fedora'
   package_name = 'libX11-xcb'

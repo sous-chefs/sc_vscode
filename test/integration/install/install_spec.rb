@@ -13,6 +13,6 @@ control 'extensions' do
   title 'Ruby Extension should be installed'
   describe command('su - vagrant -c "code --list-extensions"') do
     its('exit_status') { should eq 0 }
-    its('stdout') { should match /Ruby/i }
+    its('stdout') { should match(/Ruby/i) }
   end
 end

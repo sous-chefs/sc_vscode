@@ -14,10 +14,9 @@ action :install do
       gpgkey      signing_key
     end
     if node['platform_family'] == 'amazon'
-    # Requirement for debian
-    package 'epel-release' do
-      action :install
-    end
+      package 'epel-release' do
+        action :install
+      end
     end
   when 'debian'
     apt_repository 'vscode' do

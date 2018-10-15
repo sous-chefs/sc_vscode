@@ -5,7 +5,7 @@ include Vscode::Helper
 
 default_action :install
 
-# https://github.com/chef/mixlib-shellout for how to use usernames in shell_out. 
+# https://github.com/chef/mixlib-shellout for how to use usernames in shell_out.
 
 action :install do
   if code_package_installed?(new_resource.extension_name, new_resource.user)

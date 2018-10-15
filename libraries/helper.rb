@@ -1,5 +1,5 @@
 #
-# Author:: Xorima
+# Author:: Jason Field
 # Cookbook:: vscode
 # Library:: vscode_helper
 #
@@ -33,24 +33,23 @@ module Vscode
       end
     end
 
-    def code_installed?
-      !code_version.nil?
-    end
-
     def interpreter
       'code'
     end
 
-    def code_version
-      cmd = shell_out("#{interpreter} --version")
-      cmd.stdout.split("\n")[0]
-    rescue Errno::ENOENT
-      nil
+    def code_command(command, user)
+      full_command = "#{interpreter} #{command}"
+      cmd = Mixlib::ShellOut.new("export HOME=/home/#{user} && #{full_command}", user: user)
+      cmdres = cmd.run_command
+      if cmdres.error!
+        raise("Error running #{full_command} for user: #{user} stdout:#{cmdres.stdout}, stderr: #{cmdres.stderr}")
+      else
+        return cmdres
+      end
     end
 
     def code_installed_packages(user)
-      cmd = Mixlib::ShellOut.new("#{interpreter} --list-extensions --show-versions", :user => user)
-      cmdres = cmd.run_command
+      cmdres = code_command('--list-extensions --show-versions', user)
       extensions = cmdres.stdout.split("\n")
       result = {}
       extensions.each do |e|
@@ -67,7 +66,6 @@ module Vscode
     def code_package_installed?(package, user)
       extensions = code_installed_packages(user)
       if extensions[package.downcase]
-        # We have found the package, return the name
         true
       else
         false
@@ -78,14 +76,10 @@ module Vscode
 
     def code_install_package(package, user)
       installed = code_package_installed?(package, user)
-      Chef::Log.error(installed)
       if installed
         Chef::Log.info("Nothing to do, extension #{package} installed")
       else
-        cmd = Mixlib::ShellOut.new("#{interpreter} --install-extension #{package}", :user => user)
-        cmdres = cmd.run_command
-        Chef::Log.error("#{interpreter} --install-extension #{package} user= #{user}")
-        Chef::Log.error(cmdres.stdout.to_s)
+        cmdres = code_command("--install-extension #{package}", user)
         if cmdres.stdout.include?('successfully installed')
           Chef::Log.info("#{package} installed")
         else
@@ -97,8 +91,8 @@ module Vscode
     def code_uninstall_package(package, user)
       installed = code_package_installed?(package, user)
       if installed
-        cmd = Mixlib::ShellOut.new("#{interpreter} --uninstall-extension #{package}", :user => user)
-        cmdres = cmd.run_command
+        cmdres = code_command("--uninstall-extension #{package}", user)
+
         if cmdres.stdout.include?('successfully uninstalled')
           Chef::Log.info("#{package} uninstalled")
         else
@@ -118,8 +112,8 @@ module Vscode
       package = package.downcase
       if packages[package]
         previous_version = packages[package]
-        code_uninstall_package(package)
-        code_install_package(package)
+        code_uninstall_package(package, user)
+        code_install_package(package, user)
         packages = code_installed_packages(user)
         new_version = packages[package]
         if previous_version == new_version

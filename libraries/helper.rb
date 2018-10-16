@@ -38,18 +38,24 @@ module Vscode
       'code'
     end
 
-    def code_command(command, user)
+    def code_command(command, user, home_dir)
+      env = {'HOME' => home_dir}
       cmd = Mixlib::ShellOut.new(
-        "export HOME=/home/#{user} && #{interpreter} #{command}",
-        user: user
+        "#{interpreter} #{command}",
+        user: user,
+        environment: env
       )
       cmdres = cmd.run_command
-      raise("Error in #{interpreter} #{command} for #{user}") if cmdres.error!
-      cmdres
+      if cmdres.exitstatus == 0
+        Chef::Log.debug("command: #{command} exit code not 0")
+        return cmdres
+      else
+        raise("Error in #{interpreter} #{command} for #{user}")
+      end
     end
 
-    def code_installed_packages(user)
-      cmdres = code_command('--list-extensions --show-versions', user)
+    def code_installed_packages(user, home_dir)
+      cmdres = code_command('--list-extensions --show-versions', user, home_dir)
       extensions = cmdres.stdout.split("\n")
       result = {}
       extensions.each do |e|
@@ -63,8 +69,8 @@ module Vscode
       nil
     end
 
-    def code_package_installed?(package, user)
-      extensions = code_installed_packages(user)
+    def code_package_installed?(package, user, home_dir)
+      extensions = code_installed_packages(user, home_dir)
       if extensions[package.downcase]
         true
       else
@@ -74,44 +80,48 @@ module Vscode
       nil
     end
 
-    def code_install_package(package, user)
-      installed = code_package_installed?(package, user)
+    def code_install_package(package, user, home_dir)
+      installed = code_package_installed?(package, user, home_dir)
       if installed
         Chef::Log.info("Nothing to do, extension #{package} installed")
       else
-        cmdres = code_command("--install-extension #{package}", user)
-        Chef::Log.info("#{package} installed") if cmdres.stdout.include?(
-          'successfully installed'
-        )
-        raise("Error installing extension: #{package} for #{user}")
+        cmdres = code_command("--install-extension #{package}", user, home_dir)
+        if cmdres.stdout.include?('successfully installed')
+          Chef::Log.info("#{package} installed")
+          return true
+        else
+          raise("Error installing extension: #{package} for #{user} #{cmdres.stdout}, #{cmdres.stderr}")
+        end
       end
     end
 
-    def code_uninstall_package(package, user)
-      installed = code_package_installed?(package, user)
+    def code_uninstall_package(package, user, home_dir)
+      installed = code_package_installed?(package, user, home_dir)
       if installed
-        cmdres = code_command("--uninstall-extension #{package}", user)
-        Chef::Log.info("#{package} uninstalled") if cmdres.stdout.include?(
-          'successfully uninstalled'
-        )
-        raise("Error uninstalling extension: #{package}")
+        cmdres = code_command("--uninstall-extension #{package}", user, home_dir)
+        if cmdres.stdout.include?('successfully uninstalled')
+          Chef::Log.info("#{package} uninstalled")
+          return true
+        else
+          raise("Error uninstalling extension: #{package}")
+        end
       else
         Chef::Log.info("Nothing to do, #{package} not installed")
       end
     end
 
-    def code_upgrade_package(package, user)
+    def code_upgrade_package(package, user, home_dir)
       # We are unable to upgrade the package directly at the moment
       # See: https://github.com/Microsoft/vscode/issues/45072
       # and https://github.com/Microsoft/vscode/issues/56578
       # for now we will uninstall and reinstall and check version numbers
-      packages = code_installed_packages(user)
+      packages = code_installed_packages(user, home_dir)
       package = package.downcase
       if packages[package]
         previous_version = packages[package]
-        code_uninstall_package(package, user)
-        code_install_package(package, user)
-        packages = code_installed_packages(user)
+        code_uninstall_package(package, user, home_dir)
+        code_install_package(package, user, home_dir)
+        packages = code_installed_packages(user, home_dir)
         new_version = packages[package]
         if previous_version == new_version
           # packages match so we want to show as no converge

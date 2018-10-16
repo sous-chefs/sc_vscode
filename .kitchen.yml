@@ -20,6 +20,6 @@ platforms:
 - name: ubuntu-16.04
 
 suites:
-  - name: install
+  - name: default
     run_list:
       - recipe[test::install]

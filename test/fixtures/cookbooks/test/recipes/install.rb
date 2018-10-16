@@ -1,3 +1,6 @@
+# Make sure that Vagarant user is on the box for dokken
+include_recipe 'test::dokken'
+
 vscode_installer 'install' do
 end
 

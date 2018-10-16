@@ -12,5 +12,6 @@ workflows:
       - kitchen/lint:
           name: lint
       - kitchen/dokken:
+          name: default
           suite: default
           requires: [  danger, lint ]

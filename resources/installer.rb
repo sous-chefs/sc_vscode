@@ -42,12 +42,12 @@ action :uninstall do
     end
   when 'debian'
     apt_repository 'vscode' do
-      action :delete
+      action :remove
     end
   end
 
   package_name = code_installer_name
   package package_name do
-    action :uninstall
+    action :remove
   end
 end

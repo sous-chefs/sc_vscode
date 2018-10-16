@@ -39,19 +39,15 @@ module Vscode
     end
 
     def code_command(command, user, home_dir)
-      env = {'HOME' => home_dir}
+      env = { 'HOME' => home_dir }
       cmd = Mixlib::ShellOut.new(
         "#{interpreter} #{command}",
         user: user,
         environment: env
       )
       cmdres = cmd.run_command
-      if cmdres.exitstatus == 0
-        Chef::Log.debug("command: #{command} exit code not 0")
-        return cmdres
-      else
-        raise("Error in #{interpreter} #{command} for #{user}")
-      end
+      return cmdres if cmdres.exitstatus == 0
+      raise("Error in #{interpreter} #{command} for #{user}")
     end
 
     def code_installed_packages(user, home_dir)
@@ -86,12 +82,9 @@ module Vscode
         Chef::Log.info("Nothing to do, extension #{package} installed")
       else
         cmdres = code_command("--install-extension #{package}", user, home_dir)
-        if cmdres.stdout.include?('successfully installed')
-          Chef::Log.info("#{package} installed")
-          return true
-        else
-          raise("Error installing extension: #{package} for #{user} #{cmdres.stdout}, #{cmdres.stderr}")
-        end
+        return true if cmdres.stdout.include?('successfully installed')
+        Chef::Log.info("#{package} installed") if cmdres.stdout.include?('successfully installed')
+        raise("Error installing extension: #{package} for #{user} #{cmdres.stdout}, #{cmdres.stderr}")
       end
     end
 
@@ -99,12 +92,9 @@ module Vscode
       installed = code_package_installed?(package, user, home_dir)
       if installed
         cmdres = code_command("--uninstall-extension #{package}", user, home_dir)
-        if cmdres.stdout.include?('successfully uninstalled')
-          Chef::Log.info("#{package} uninstalled")
-          return true
-        else
-          raise("Error uninstalling extension: #{package}")
-        end
+        Chef::Log.info("#{package} uninstalled") if cmdres.stdout.include?('successfully uninstalled')
+        return true if cmdres.stdout.include?('successfully uninstalled')
+        raise("Error uninstalling extension: #{package}")
       else
         Chef::Log.info("Nothing to do, #{package} not installed")
       end

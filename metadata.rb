@@ -1,4 +1,4 @@
-name              'vscode'
+name              'code'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'
 license           'Apache-2.0'

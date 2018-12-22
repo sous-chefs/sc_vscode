@@ -1,5 +1,3 @@
-# To learn more about Custom Resources, see https://docs.chef.io/custom_resources.html
-
 include Vscode::Helper
 
 signing_key = 'https://packages.microsoft.com/keys/microsoft.asc'

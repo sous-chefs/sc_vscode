@@ -2,9 +2,7 @@
 
 This file is used to list changes made in each version of the git_checkout cookbook.
 
-# 0.0.1
-
-Pre-release.
+## 1.0.0
 
 - Added extension management
   - Can install extensions
@@ -13,3 +11,4 @@ Pre-release.
 - Added installation management
   - Can install vscode and related repository
   - Can uninstall vscode and related repository
+- Added initial support for Linux

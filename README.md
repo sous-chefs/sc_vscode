@@ -4,7 +4,7 @@ Provides a set of resources to aid in the installation and management of vscode 
 
 ## Requirements
 
-- code accessible on path
+- Linux
 
 ### Chef
 
@@ -12,9 +12,9 @@ Provides a set of resources to aid in the installation and management of vscode 
 
 ## Resources
 
-### extensions
+### sc_vscode_extension
 
-Installs or uninstalls extensions for a user. Extensions are user specific
+Installs or uninstalls an extension for a user. Extensions are user specific
 
 #### Actions
 
@@ -27,7 +27,7 @@ Installs or uninstalls extensions for a user. Extensions are user specific
 - `user` - (Required) String, The name of the user who you wish to install the extension for
 - `home_dir` - (Optional) String, The location of the home dir for the user, if not in /home/user or C:\users\user
 
-### installer
+### sc_vscode_installer
 
 Installs or uninstalls visual studio code
 

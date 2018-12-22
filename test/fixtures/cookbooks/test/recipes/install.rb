@@ -1,7 +1,7 @@
 # Make sure that Vagarant user is on the box for dokken
 include_recipe 'test::dokken'
 
-vscode_installer 'install' do
+sc_vscode_installer 'install' do
 end
 
 # We need a couple prereqs for testing as servers do not have a GUI,
@@ -18,6 +18,6 @@ package 'testing-prereqs' do
   not_if { package_name.nil? }
 end
 
-vscode_extension 'rebornix.ruby' do
+sc_vscode_extension 'rebornix.ruby' do
   user 'vagrant'
 end

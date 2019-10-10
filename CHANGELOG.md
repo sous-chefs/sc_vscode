@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of the git_checkout cookbook.
 
+## 1.0.1
+
+- Added `.gitattributes` to ensure `lf` line endings
+- Updated circleci builds to be parallel
+- Updated cookbook with latest `cookstyle` fixes
+- Changed `Dangerfile` to use `failure` instead of `fail`
+- Removed `.rubocop.yml` as no longer required
+
 ## 1.0.0
 
 - Added extension management

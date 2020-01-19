@@ -1,6 +1,10 @@
 # vscode CHANGELOG
 
-This file is used to list changes made in each version of the git_checkout cookbook.
+This file is used to list changes made in each version of the vscode cookbook.
+
+## Unreleased
+
+- Migrated to actions for testing
 
 ## 1.0.1
 

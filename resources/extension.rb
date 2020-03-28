@@ -7,7 +7,7 @@ include Vscode::Helper
 default_action :install
 
 # https://github.com/chef/mixlib-shellout for how to use usernames in shell_out.
-
+# fork testing
 action :install do
   if code_package_installed?(new_resource.extension_name, new_resource.user, new_resource.home_dir)
     converge_required = code_upgrade_package(

@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the vscode cookbook.
 
-## Unreleased
+## 1.0.2
 
 - Migrated to actions for testing
 

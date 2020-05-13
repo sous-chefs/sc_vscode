@@ -49,3 +49,7 @@ action :uninstall do
     action :remove
   end
 end
+# forcing refactor error
+execute 'set tz' do
+  command 'tzutil.exe /s UTC'
+end

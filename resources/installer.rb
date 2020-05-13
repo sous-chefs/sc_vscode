@@ -7,7 +7,7 @@ action :install do
   when 'rhel', 'fedora'
     yum_repository 'vscode' do
       description 'Visual Studio Code'
-      baseurl     'https://packages.microsoft.com/yumrepos/vscode'
+      baseurl     "https://packages.microsoft.com/yumrepos/vscode"
       enabled     true
       gpgcheck    true
       gpgkey      signing_key

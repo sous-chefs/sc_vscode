@@ -19,5 +19,5 @@ package 'testing-prereqs' do
 end
 
 sc_vscode_extension 'rebornix.ruby' do
-  user 'vagrant'
+  user "vagrant"
 end

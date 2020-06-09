@@ -15,5 +15,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Test Action
         uses: Xorima/test-action@update-action
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

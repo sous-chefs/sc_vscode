@@ -14,4 +14,4 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Run Test Action
-        uses: Xorima/test-action
+        uses: xorima/test-action

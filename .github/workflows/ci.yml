@@ -17,3 +17,4 @@ jobs:
         uses: Xorima/test-action@update-action
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GATEWAY_URL: ${{ secrets.GATEWAY_URL }}

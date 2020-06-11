@@ -4,7 +4,6 @@ This file is used to list changes made in each version of the vscode cookbook.
 
 ## 1.0.2
 
-- bloop
 - Migrated to actions for testing
 
 ## 1.0.1

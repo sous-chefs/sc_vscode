@@ -6,15 +6,15 @@ PreCommit:
     enabled: true
   Rspec:
     enabled: true
-    required_executable: 'rspec'
+    required_executable: "rspec"
   Cookstyle:
     enabled: true
-    required_executable: 'cookstyle'
+    required_executable: "cookstyle"
     command: ["cookstyle"]
   Delivery:
     enabled: true
-    required_executable: 'delivery'
-    flags: ['local', 'all']
+    required_executable: "delivery"
+    flags: ["local", "all"]
 CommitMsg:
   HardTabs:
     enabled: true

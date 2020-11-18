@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the vscode cookbook.
 
+## Unreleased
+
 ## 1.0.3 - *2020-11-18*
 
 - fixed yamllint warning for "on" in the ci workflow

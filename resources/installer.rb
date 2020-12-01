@@ -36,7 +36,7 @@ action :uninstall do
   case node['platform_family']
   when 'rhel', 'fedora', 'amazon'
     yum_repository 'vscode' do
-      action :delete
+      action :remove
     end
   when 'debian'
     apt_repository 'vscode' do

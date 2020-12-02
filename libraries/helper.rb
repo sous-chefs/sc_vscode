@@ -38,6 +38,15 @@ module Vscode
       'code'
     end
 
+    # Additional packages needed to properly run vscode
+    def vscode_pkg_deps
+      if platform_family?('rhel')
+        node['platform_version'].to_i >= 8 ? 'libX11-xcb' : 'libxcb'
+      elsif platform_family?('debian')
+        'libxcb-dri3-0'
+      end
+    end
+
     def code_command(command, user, home_dir)
       env = { 'HOME' => home_dir }
       cmd = Mixlib::ShellOut.new(

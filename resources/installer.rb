@@ -21,10 +21,10 @@ action :install do
       distribution  'stable'
       key           signing_key
     end
-    package 'apt-transport-https' do
-      action :install
-    end
+    package 'apt-transport-https'
   end
+
+  package vscode_pkg_deps if node['os'] == 'linux'
 
   package_name = code_installer_name
   package package_name do
@@ -36,7 +36,7 @@ action :uninstall do
   case node['platform_family']
   when 'rhel', 'fedora', 'amazon'
     yum_repository 'vscode' do
-      action :delete
+      action :remove
     end
   when 'debian'
     apt_repository 'vscode' do

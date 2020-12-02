@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the vscode cookbook.
 ## Unreleased
 
 - resolved cookstyle error: resources/installer.rb:39:7 warning: `Chef/Deprecations/DeprecatedYumRepositoryActions`
+- Install libxcb which is required to properly install extensions
 
 ## 1.0.3 - *2020-11-18*
 

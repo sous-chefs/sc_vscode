@@ -6,6 +6,8 @@ This file is used to list changes made in each version of the vscode cookbook.
 
 - Added `unified_mode` to resource for chef 18 compatibility
 
+## 1.0.6 - *2021-06-18*
+
 ## 1.0.5 - *2021-06-01*
 
 ## 1.0.4 - *2020-12-02*

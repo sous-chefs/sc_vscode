@@ -10,3 +10,12 @@ directory '/home/vagrant' do
   group 'vagrant'
   not_if { platform?('windows') }
 end
+
+package_required = case node['platform_family']
+                   when 'rhel', 'amazon', 'fedora'
+                     'libxshmfence'
+                   when 'debian'
+                     'libxshmfence1'
+                   end
+
+package package_required if package_required

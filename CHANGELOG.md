@@ -4,6 +4,9 @@ This file is used to list changes made in each version of the vscode cookbook.
 
 ## Unreleased
 
+- Updated to Standard Files definition
+- Resolved failing tests
+
 ## 1.0.6 - *2021-06-18*
 
 ## 1.0.5 - *2021-06-01*

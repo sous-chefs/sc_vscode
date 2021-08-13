@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the vscode cookbook.
 
+## Unreleased
+
 ## 1.0.7 - *2021-08-13*
 
 - Updated to Standard Files definition

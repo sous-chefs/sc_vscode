@@ -4,9 +4,8 @@ This file is used to list changes made in each version of the vscode cookbook.
 
 ## Unreleased
 
-## 1.0.8 - *2021-08-13*
+- Fix missing Changelog Entries
 
-- Testing our auto-release system
 ## 1.0.7 - *2021-08-13*
 
 - Updated to Standard Files definition
@@ -14,7 +13,11 @@ This file is used to list changes made in each version of the vscode cookbook.
 
 ## 1.0.6 - *2021-06-18*
 
+- Standard Files Update
+
 ## 1.0.5 - *2021-06-01*
+
+- Standard Files update
 
 ## 1.0.4 - *2020-12-02*
 

@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the vscode cookbook.
 
-## Unreleased
+## 1.0.9 - *2021-08-13*
 
 - Fix missing Changelog Entries
 

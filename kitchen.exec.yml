@@ -8,3 +8,5 @@ transport:
 platforms:
   - name: windows-latest
   - name: macos-latest
+    attributes:
+      user: 'runner'

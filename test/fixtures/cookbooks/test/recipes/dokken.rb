@@ -1,13 +1,13 @@
 # Make sure Vagrant user is on the box. This should fix the dokken user install
-user 'vagrant'
+user node['user']
 
-group 'vagrant' do
-  members 'vagrant'
+group node['user'] do
+  members node['user']
 end
 
 directory '/home/vagrant' do
-  owner 'vagrant'
-  group 'vagrant'
+  owner node['user']
+  group node['user']
   not_if { platform?('windows') }
 end
 

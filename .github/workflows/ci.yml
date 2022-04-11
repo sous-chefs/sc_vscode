@@ -49,7 +49,7 @@ jobs:
           os: ${{ matrix.os }}
 
   integration-macos:
-    needs: 'lint-unit'
+    # needs: 'lint-unit'
     runs-on: macos-latest
     steps:
       - run: echo $USER

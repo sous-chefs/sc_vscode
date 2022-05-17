@@ -1,10 +1,11 @@
 # Make sure Vagrant user is on the box. This should fix the dokken user install
 user node['user'] do
-  not_if { platform? == 'mac_os_x' }
+  not_if { platform?('mac_os_x') }
 end
 
 group node['user'] do
   members node['user']
+  not_if { platform?('mac_os_x') }
 end
 
 directory '/home/vagrant' do

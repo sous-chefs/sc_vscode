@@ -60,9 +60,8 @@ jobs:
         uses: actionshub/test-kitchen@main
         env:
           CHEF_LICENSE: accept-no-persist
-          KITCHEN_LOCAL_YAML: kitchen.macos.yml
+          KITCHEN_LOCAL_YAML: kitchen.exec.yml
           TERM: xterm-256color
         with:
           suite: default
-          os: macos
-          action: converge
+          os: macos-latest

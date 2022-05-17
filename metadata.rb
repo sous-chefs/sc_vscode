@@ -6,7 +6,7 @@ description       'Installs and manages Visual Studio Code Extensions'
 source_url        'https://github.com/sous-chefs/vscode'
 issues_url        'https://github.com/sous-chefs/vscode/issues'
 chef_version      '>= 15.3'
-version           '1.0.6'
+version           '1.0.10'
 
 %w(ubuntu redhat centos fedora).each do |os|
   supports os

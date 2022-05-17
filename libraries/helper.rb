@@ -27,8 +27,10 @@ module Vscode
 
     def code_installer_name
       case node['os']
-      when 'linux', 'darwin'
+      when 'linux'
         'code'
+      when 'darwin'
+        'visual-studio-code'
       else
         'vscode'
       end

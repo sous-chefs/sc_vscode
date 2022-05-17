@@ -1,5 +1,5 @@
 # Make sure Vagrant user is on the box. This should fix the dokken user install
-user node['user']
+user node['user'] unless node['platform'] == 'macos'
 
 group node['user'] do
   members node['user']

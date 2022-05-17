@@ -29,8 +29,6 @@ module Vscode
       case node['os']
       when 'linux'
         'code'
-      when 'darwin'
-        'visual-studio-code'
       else
         'vscode'
       end

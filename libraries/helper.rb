@@ -26,6 +26,7 @@ module Vscode
     include Chef::Mixin::ShellOut
 
     def code_installer_name
+      puts "HELLO Dan: #{node['os']}"
       case node['os']
       when 'linux', 'mac_os_x'
         'code'

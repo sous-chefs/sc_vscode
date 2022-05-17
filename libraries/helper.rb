@@ -27,7 +27,7 @@ module Vscode
 
     def code_installer_name
       case node['os']
-      when 'linux', 'macos'
+      when 'linux', 'mac_os_x'
         'code'
       else
         'vscode'

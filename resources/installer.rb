@@ -1,5 +1,5 @@
 include Vscode::Helper
-
+unified_mode true
 signing_key = 'https://packages.microsoft.com/keys/microsoft.asc'
 
 action :install do
@@ -26,9 +26,10 @@ action :install do
 
   package vscode_pkg_deps if node['os'] == 'linux'
 
-  package_name = code_installer_name
-  package package_name do
-    action :install
+  if platform?('mac_os_x')
+    homebrew_cask 'visual-studio-code'
+  else
+    package code_installer_name
   end
 end
 
@@ -44,8 +45,13 @@ action :uninstall do
     end
   end
 
-  package_name = code_installer_name
-  package package_name do
-    action :remove
+  if platform?('mac_os_x')
+    homebrew_cask 'visual-studio-code' do
+      action :remove
+    end
+  else
+    package code_installer_name do
+      action :remove
+    end
   end
 end

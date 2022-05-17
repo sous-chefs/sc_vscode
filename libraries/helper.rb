@@ -76,6 +76,7 @@ module Vscode
 
     def code_package_installed?(package, user, home_dir)
       extensions = code_installed_packages(user, home_dir)
+
       if extensions[package.downcase]
         true
       else

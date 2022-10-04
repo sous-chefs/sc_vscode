@@ -3,6 +3,11 @@ name: danger
 on:
   pull_request_target:
     types: [assigned, opened, synchronize, reopened]
+permissions:
+  actions: write
+  checks: write
+  pull-requests: write
+  statuses: write
 
 jobs:
   danger:

@@ -55,8 +55,3 @@ action :uninstall do
     end
   end
 end
-
-# this is me 
-# making some changes
-# to trigger dangerfile 
-# hopefully

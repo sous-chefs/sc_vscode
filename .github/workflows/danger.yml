@@ -1,6 +1,6 @@
 name: danger
 
-on:
+'on':
   pull_request_target:
     types: [assigned, opened, synchronize, reopened]
 
@@ -19,4 +19,3 @@ permissions:
   contents: read
   issues: write
   pull-requests: write
-

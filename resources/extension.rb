@@ -15,6 +15,7 @@ action :install do
       new_resource.user,
       new_resource.home_dir
     )
+
     if converge_required
       # Mark as converged,
       # but do nothing as code_upgrade_package did the converge

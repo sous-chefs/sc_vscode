@@ -14,3 +14,8 @@ jobs:
         uses: actionshub/danger-rb@main
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write

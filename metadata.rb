@@ -8,6 +8,7 @@ issues_url        'https://github.com/sous-chefs/vscode/issues'
 chef_version      '>= 15.3'
 version           '2.0.2'
 
-%w(ubuntu redhat centos fedora).each do |os|
-  supports os
-end
+supports ubuntu
+supports redhat
+supports centos
+supports fedora

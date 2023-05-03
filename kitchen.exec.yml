@@ -1,12 +1,7 @@
 ---
-driver:
-  name: exec
-
-transport:
-  name: exec
+driver: { name: exec }
+transport: { name: exec }
 
 platforms:
-  - name: windows-latest
   - name: macos-latest
-    attributes:
-      user: 'runner'
+  - name: windows-latest

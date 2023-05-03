@@ -10,7 +10,7 @@ troubleshooting more
 
 ## 2.0.2 - *2023-03-22*
 
-troubleshooting our release system 
+troubleshooting our release system
 
 ## 2.0.1 - *2022-11-02*
 

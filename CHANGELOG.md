@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the vscode cookbook.
 
-## Unreleased
+## 2.0.8 - *2023-11-01*
 
 ## 2.0.7 - *2023-09-11*
 

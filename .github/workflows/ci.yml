@@ -20,6 +20,8 @@ jobs:
   metadata-verification:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code
+        uses: actions/checkout@v4
       - name: validate metadata has been bumped
         uses: actionshub/chef-metadata-validator@init
 

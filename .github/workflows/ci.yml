@@ -20,10 +20,14 @@ jobs:
   metadata-verification:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        name: "Checkout base ref"
         with:
-          fetch-depth: 0
+          ref: ${{ github.event.pull_request.base.sha }}
+      - uses: actions/checkout@v4
+        name: "Checkout commit by ref"
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Show cloned branches
         run: "git branch"
       - name: validate metadata has been bumped

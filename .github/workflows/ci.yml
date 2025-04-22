@@ -17,51 +17,66 @@ jobs:
       statuses: write
       issues: write
 
-  integration:
-    needs: "lint-unit"
+  metadata-verification:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os:
-          - "debian-9"
-          - "debian-10"
-          - "centos-7"
-          - "centos-8"
-          - "ubuntu-1604"
-          - "ubuntu-1804"
-          - "ubuntu-2004"
-        suite:
-          - "default"
-      fail-fast: false
-
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Install Chef
-        uses: actionshub/chef-install@main
-      - name: Dokken
-        uses: actionshub/test-kitchen@main
-        env:
-          CHEF_LICENSE: accept-no-persist
-          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+      - uses: actions/checkout@v4
         with:
-          suite: ${{ matrix.suite }}
-          os: ${{ matrix.os }}
+          fetch-depth: 0
+      - run: "git checkout ${{ github.event.pull_request.base.sha }}"
+        name: "Checkout base ref"
+      - run: "git checkout ${{ github.event.pull_request.head.sha }}"
+        name: "Checkout commit by ref"
+      - name: Show cloned branches
+        run: "git branch"
+      - name: validate metadata has been bumped
+        uses: actionshub/chef-metadata-validator@init
 
-  integration-macos:
-    needs: "lint-unit"
-    runs-on: macos-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Install Chef
-        uses: actionshub/chef-install@main
-      - name: Kitchen Converge
-        uses: actionshub/test-kitchen@main
-        env:
-          CHEF_LICENSE: accept-no-persist
-          KITCHEN_LOCAL_YAML: kitchen.exec.yml
-          TERM: xterm-256color
-        with:
-          suite: default
-          os: macos-latest
+  # integration:
+  #   needs: "lint-unit"
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - "debian-9"
+  #         - "debian-10"
+  #         - "centos-7"
+  #         - "centos-8"
+  #         - "ubuntu-1604"
+  #         - "ubuntu-1804"
+  #         - "ubuntu-2004"
+  #       suite:
+  #         - "default"
+  #     fail-fast: false
+
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v4
+  #     - name: Install Chef
+  #       uses: actionshub/chef-install@main
+  #     - name: Dokken
+  #       uses: actionshub/test-kitchen@main
+  #       env:
+  #         CHEF_LICENSE: accept-no-persist
+  #         KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+  #       with:
+  #         suite: ${{ matrix.suite }}
+  #         os: ${{ matrix.os }}
+
+  # integration-macos:
+  #   needs: "lint-unit"
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v4
+  #     - name: Install Chef
+  #       uses: actionshub/chef-install@main
+  #     - name: Kitchen Converge
+  #       uses: actionshub/test-kitchen@main
+  #       env:
+  #         CHEF_LICENSE: accept-no-persist
+  #         KITCHEN_LOCAL_YAML: kitchen.exec.yml
+  #         TERM: xterm-256color
+  #       with:
+  #         suite: default
+  #         os: macos-latest

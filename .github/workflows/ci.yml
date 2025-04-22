@@ -21,13 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: "git checkout ${{ github.event.pull_request.base.sha }}"
         name: "Checkout base ref"
-        with:
-          ref: ${{ github.event.pull_request.base.sha }}
-      - uses: actions/checkout@v4
+      - run: "git checkout ${{ github.event.pull_request.head.sha }}"
         name: "Checkout commit by ref"
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
       - name: Show cloned branches
         run: "git branch"
       - name: validate metadata has been bumped

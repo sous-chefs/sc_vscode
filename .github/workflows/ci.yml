@@ -24,6 +24,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Show cloned branches
+        run: "git branch"
       - name: validate metadata has been bumped
         uses: actionshub/chef-metadata-validator@init
 

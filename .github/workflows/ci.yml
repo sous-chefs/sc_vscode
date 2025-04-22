@@ -17,6 +17,12 @@ jobs:
       statuses: write
       issues: write
 
+  metadata-verification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: validate metadata has been bumped
+        uses: actionshub/chef-metadata-validator@init
+
   integration:
     needs: "lint-unit"
     runs-on: ubuntu-latest

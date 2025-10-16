@@ -65,7 +65,7 @@ module Vscode
       result = {}
       extensions.each do |e|
         info = e.split('@')
-        name = info[0].downcase
+        name = info.first.downcase
         version = info[1]
         result[name] = version
       end

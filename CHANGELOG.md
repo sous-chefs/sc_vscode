@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the vscode cookbook.
 
+## [2.0.13](https://github.com/sous-chefs/sc_vscode/compare/2.0.12...v2.0.13) (2025-10-16)
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#99](https://github.com/sous-chefs/sc_vscode/issues/99)) ([8c7c284](https://github.com/sous-chefs/sc_vscode/commit/8c7c2849ddad2884c115e02beadff131b04e8fc2))
+
 ## 2.0.11 - *2024-07-10*
 
 * Triggering a release to check systems are working

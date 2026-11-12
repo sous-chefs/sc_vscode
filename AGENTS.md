@@ -60,3 +60,13 @@ error` even for `/bin/sleep`), so obtain Kitchen evidence on hosted amd64 CI.
 The owner chose to replace the pending 2.1.0 release with a major migration.
 Land a `feat!` feature PR first, then verify release-please generates 3.0.0.
 Do not publish these changes by merging the old 2.1.0 release unchanged.
+
+## Proven integration fixes
+
+Use the current APT URI `https://packages.microsoft.com/repos/code`. VS Code's
+package post-install script recognises that URI and preserves the managed
+repository. The old `/repos/vscode` URI causes the package to replace the
+managed `.list` file with a `.sources` file, breaking the second converge.
+See <https://github.com/microsoft/vscode/blob/main/resources/linux/debian/postinst.template>.
+On macOS the preinstalled workstation client is under `/opt/cinc-workstation`,
+not the standalone client's `/opt/cinc` directory.

@@ -5,6 +5,7 @@ transport:
   name: exec
 provisioner:
   chef_omnibus_install: false
+  chef_omnibus_root: /opt/cinc-workstation
   sudo: false
 platforms:
   - name: macos-latest

@@ -12,7 +12,7 @@ describe 'sc_vscode_installer' do
     end
 
     it { is_expected.to install_package('code') }
-    it { is_expected.to add_apt_repository('vscode') }
+    it { is_expected.to add_apt_repository('vscode').with(uri: 'https://packages.microsoft.com/repos/code') }
   end
 
   context 'uninstallation' do

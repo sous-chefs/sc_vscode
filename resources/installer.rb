@@ -25,7 +25,7 @@ action :install do
 
   when 'debian'
     apt_repository 'vscode' do
-      uri           'https://packages.microsoft.com/repos/vscode'
+      uri           'https://packages.microsoft.com/repos/code'
       arch          'amd64'
       components    ['main']
       distribution  'stable'

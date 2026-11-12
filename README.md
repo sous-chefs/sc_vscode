@@ -8,22 +8,25 @@
 
 Provides a set of resources to aid in the installation and management of vscode extensions
 
+See the [version 3 migration guide](migration.md) before upgrading.
+
 ## Maintainers
 
 This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of Chef cookbook maintainers working together to maintain important cookbooks. If you’d like to know more please visit [sous-chefs.org](https://sous-chefs.org/) or come chat with us on the Chef Community Slack in [#sous-chefs](https://chefcommunity.slack.com/messages/C2V7B88SF).
 
 ## Requirements
 
-- Linux
+- Linux (Microsoft APT or RPM repositories)
+- macOS (Homebrew)
 
 ### Chef
 
-- Chef 13 +
+- Chef 15.3 or later
 
 ## Resources
 
-- [extension](https://github.com/sous-chefs/grafana/blob/master/documentation/sc_vscode_extension.md)
-- [install](https://github.com/sous-chefs/grafana/blob/master/documentation/sc_vscode_installer.md)
+- [extension](documentation/sc_vscode_extension.md)
+- [install](documentation/sc_vscode_installer.md)
 
 ## Contributors
 

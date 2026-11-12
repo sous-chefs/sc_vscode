@@ -1,10 +1,20 @@
+# frozen_string_literal: true
+
+provides :sc_vscode_installer
+
 include Vscode::Helper
 unified_mode true
 signing_key = 'https://packages.microsoft.com/keys/microsoft.asc'
 
 action :install do
   case node['platform_family']
-  when 'rhel', 'fedora'
+  when 'suse'
+    zypper_repository 'vscode' do
+      baseurl 'https://packages.microsoft.com/yumrepos/vscode'
+      gpgcheck true
+      gpgkey signing_key
+    end
+  when 'rhel', 'fedora', 'amazon'
     yum_repository 'vscode' do
       description 'Visual Studio Code'
       baseurl     'https://packages.microsoft.com/yumrepos/vscode'
@@ -15,7 +25,7 @@ action :install do
 
   when 'debian'
     apt_repository 'vscode' do
-      uri           'https://packages.microsoft.com/repos/vscode'
+      uri           'https://packages.microsoft.com/repos/code'
       arch          'amd64'
       components    ['main']
       distribution  'stable'
@@ -24,7 +34,9 @@ action :install do
     package 'apt-transport-https'
   end
 
-  package vscode_pkg_deps if node['os'] == 'linux'
+  dependencies = vscode_pkg_deps
+  package dependencies if node['os'] == 'linux' && dependencies
+  package 'openssl3-libs' if platform?('fedora') && node['platform_version'].to_i >= 45
 
   if platform?('mac_os_x')
     homebrew_cask 'visual-studio-code'
@@ -35,6 +47,10 @@ end
 
 action :uninstall do
   case node['platform_family']
+  when 'suse'
+    zypper_repository 'vscode' do
+      action :remove
+    end
   when 'rhel', 'fedora', 'amazon'
     yum_repository 'vscode' do
       action :remove

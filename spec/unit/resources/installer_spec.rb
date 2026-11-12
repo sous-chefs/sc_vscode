@@ -27,6 +27,7 @@ describe 'sc_vscode_installer' do
   end
 
   context 'Fedora 45 extension signature verification' do
+    # Bundled Fauxhai only has older Fedora fixtures; this rule uses the version.
     platform 'fedora', '32'
     automatic_attributes['platform_version'] = '45'
 

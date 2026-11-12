@@ -6,7 +6,6 @@ name: ci
   push:
     branches:
       - main
-      - codex/migrate-sc-vscode
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}

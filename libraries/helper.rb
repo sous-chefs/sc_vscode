@@ -113,28 +113,17 @@ module Vscode
     end
 
     def code_upgrade_package(package, user, home_dir)
-      # We are unable to upgrade the package directly at the moment
-      # See: https://github.com/Microsoft/vscode/issues/45072
-      # and https://github.com/Microsoft/vscode/issues/56578
-      # for now we will uninstall and reinstall and check version numbers
-      packages = code_installed_packages(user, home_dir)
       package = package.downcase
-      if packages[package]
-        previous_version = packages[package]
-        code_uninstall_package(package, user, home_dir)
-        code_install_package(package, user, home_dir)
-        packages = code_installed_packages(user, home_dir)
-        new_version = packages[package]
-        if previous_version == new_version
-          # packages match so we want to show as no converge
-          nil
-        else
-          Chef::Log.info("#{package} upgraded")
-          true
-        end
-      else
-        Chef::Log.info("#{package} not installed, will no upgrade")
-      end
+      previous_version = code_installed_packages(user, home_dir)[package]
+      return unless previous_version
+
+      code_command("--install-extension #{package} --force", user, home_dir)
+      new_version = code_installed_packages(user, home_dir)[package]
+      raise("Extension #{package} is missing after checking for updates") unless new_version
+      return if previous_version == new_version
+
+      Chef::Log.info("#{package} upgraded")
+      true
     end
   end
 end

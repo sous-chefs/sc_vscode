@@ -24,16 +24,14 @@ alone does not establish platform coverage.
 
 ## Findings from the release audit
 
-* Both custom resources use unified mode but lack explicit `provides` names.
-* Extension uninstall calls `code_package_installed?` with two arguments even
-  though the helper requires `home_dir` as its third argument.
-* The existing ChefSpec example evaluates a symbol rather than converging, so it
-  cannot prove installation behaviour.
-* CI RSpec requires `chefspec/berkshelf` but its generated Gemfile omits
-  Berkshelf. The shared workflow at 9.0.1 supports the `gems` input.
-* Full migration still requires meaningful install/uninstall unit coverage,
-  Policyfile dependency resolution, a default test cookbook recipe and a real
-  InSpec profile, aligned Kitchen/CI matrices and integration evidence.
+* Both public resources use unified mode and explicit `provides` names.
+* Extension uninstall must pass `home_dir` through every installed-state check.
+* Keep real ChefSpec convergence and lifecycle assertions; evaluating a symbol
+  inside an exception expectation does not run the resource.
+* CI resolves Policyfile dependencies through `chef-cli`, supplied by the shared
+  workflow's `gems` input. Do not restore the obsolete Berkshelf require.
+* Keep the Policyfile, default test cookbook, InSpec profile and Kitchen/CI
+  matrices aligned. Require two converges and zero updates on the second.
 * Dokken is appropriate for Linux package tests. Keep macOS integration isolated
   from Linux containers. Do not converge the installer on the maintainer's Mac.
 
@@ -75,3 +73,10 @@ Fedora 45 ships OpenSSL 4, but VS Code's extension verifier still needs the
 OpenSSL 3 compatibility library. Install `openssl3-libs` on Fedora 45 and later;
 do not disable extension signature verification. Upstream evidence:
 <https://github.com/microsoft/vscode/issues/338194>.
+
+Use the CLI's targeted `--install-extension <id> --force` update path rather than
+uninstalling and reinstalling an existing extension. The current CLI compares
+the marketplace version and skips installation when that version is already
+present. This preserves automatic updates without transient removal on every
+converge. Source:
+<https://github.com/microsoft/vscode/blob/main/src/vs/platform/extensionManagement/common/extensionManagementCLI.ts>.

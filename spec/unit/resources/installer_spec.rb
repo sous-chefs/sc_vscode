@@ -25,4 +25,15 @@ describe 'sc_vscode_installer' do
     it { is_expected.to remove_package('code') }
     it { is_expected.to remove_apt_repository('vscode') }
   end
+
+  context 'Fedora 45 extension signature verification' do
+    platform 'fedora', '32'
+    automatic_attributes['platform_version'] = '45'
+
+    recipe do
+      sc_vscode_installer 'editor'
+    end
+
+    it { is_expected.to install_package('openssl3-libs') }
+  end
 end

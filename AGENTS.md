@@ -70,3 +70,8 @@ managed `.list` file with a `.sources` file, breaking the second converge.
 See <https://github.com/microsoft/vscode/blob/main/resources/linux/debian/postinst.template>.
 On macOS the preinstalled workstation client is under `/opt/cinc-workstation`,
 not the standalone client's `/opt/cinc` directory.
+
+Fedora 45 ships OpenSSL 4, but VS Code's extension verifier still needs the
+OpenSSL 3 compatibility library. Install `openssl3-libs` on Fedora 45 and later;
+do not disable extension signature verification. Upstream evidence:
+<https://github.com/microsoft/vscode/issues/338194>.

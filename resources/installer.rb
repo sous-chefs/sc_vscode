@@ -36,6 +36,7 @@ action :install do
 
   dependencies = vscode_pkg_deps
   package dependencies if node['os'] == 'linux' && dependencies
+  package 'openssl3-libs' if platform?('fedora') && node['platform_version'].to_i >= 45
 
   if platform?('mac_os_x')
     homebrew_cask 'visual-studio-code'

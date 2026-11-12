@@ -11,8 +11,7 @@ the configured `home_dir` when checking whether the extension is installed.
 
 The major release removes end-of-life CentOS Linux, CentOS Stream 8, Debian 9,
 Debian 10, Debian 11 and obsolete interim Ubuntu integration targets. Ubuntu
-20.04 stays in the matrix for systems using Ubuntu Pro ESM. The openSUSE family
-stays in the matrix. Linux package tests still use amd64, matching the existing
+20.04 stays in the matrix for systems using Ubuntu Pro ESM. The openSUSE family stays in the matrix with Leap 16.0. Linux package tests still use amd64, matching the existing
 APT repository configuration.
 
 Development and test dependency resolution now uses `Policyfile.rb`. Run

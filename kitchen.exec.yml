@@ -5,7 +5,9 @@ transport:
   name: exec
 provisioner:
   chef_omnibus_install: false
-  chef_omnibus_root: /opt/cinc-workstation
+  cinc_omnibus_root: /opt/cinc-workstation
+  cinc_client_path: /opt/cinc-workstation/bin/cinc-client
+  install_strategy: skip
   sudo: false
 platforms:
   - name: macos-latest

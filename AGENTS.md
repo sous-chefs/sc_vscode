@@ -40,7 +40,7 @@ alone does not establish platform coverage.
 ## Platform and verification decisions
 
 Retain Ubuntu 20.04 for Ubuntu Pro ESM systems. Retain the openSUSE platform
-family, including its existing Leap 15 test target, and configure the Microsoft
+family, using the official Leap 16.0 image, and configure the Microsoft
 RPM repository through `zypper_repository`. Keep the existing supported Linux
 families; obsolete release removal is documented in `migration.md`.
 

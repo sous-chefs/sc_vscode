@@ -58,7 +58,7 @@ module Vscode
       )
       cmdres = cmd.run_command
       return cmdres if cmdres.exitstatus == 0
-      raise("Error in #{interpreter} #{command} for #{user}")
+      raise("Error in #{interpreter} #{command} for #{user} (exit #{cmdres.exitstatus}): #{cmdres.stderr}")
     end
 
     def code_installed_packages(user, home_dir)

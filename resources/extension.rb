@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+provides :sc_vscode_extension
+
 property :extension_name, String, name_property: true
 property :user,           String, required: true
 property :home_dir,       String, default: lazy { ::File.expand_path("~#{user}") }
@@ -36,7 +40,7 @@ action :install do
 end
 
 action :uninstall do
-  if code_package_installed?(new_resource.extension_name, new_resource.user)
+  if code_package_installed?(new_resource.extension_name, new_resource.user, new_resource.home_dir)
     converge_by("Uninstalling #{new_resource.extension_name}
       for #{new_resource.user}") do
       code_uninstall_package(

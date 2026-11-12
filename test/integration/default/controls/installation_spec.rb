@@ -21,7 +21,7 @@ else
   control 'extensions' do
     impact 1.0
     title 'Ruby Extension should be installed'
-    describe command('su - vagrant -c "code --list-extensions"') do
+    describe command('su - vscode-test -c "code --list-extensions"') do
       its('exit_status') { should eq 0 }
       its('stdout') { should match(/Ruby/i) }
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Author:: Jason Field
 # Cookbook:: vscode
@@ -40,7 +42,7 @@ module Vscode
 
     # Additional packages needed to properly run vscode
     def vscode_pkg_deps
-      if platform_family?('rhel')
+      if platform_family?('rhel', 'fedora', 'amazon')
         node['platform_version'].to_i >= 8 ? 'libX11-xcb' : 'libxcb'
       elsif platform_family?('debian')
         'libxcb-dri3-0'

@@ -6,6 +6,7 @@ name: ci
   push:
     branches:
       - main
+      - codex/migrate-sc-vscode
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
@@ -14,6 +15,8 @@ concurrency:
 jobs:
   lint-unit:
     uses: sous-chefs/.github/.github/workflows/lint-unit.yml@9.0.1
+    with:
+      gems: chef-cli
     permissions:
       actions: write
       checks: write
@@ -27,13 +30,21 @@ jobs:
     strategy:
       matrix:
         os:
-          - "debian-9"
-          - "debian-10"
-          - "centos-7"
-          - "centos-8"
-          - "ubuntu-1604"
-          - "ubuntu-1804"
+          - "almalinux-8"
+          - "almalinux-9"
+          - "amazonlinux-2023"
+          - "centos-stream-9"
+          - "debian-12"
+          - "debian-13"
+          - "fedora-latest"
+          - "opensuse-leap-15"
+          - "oraclelinux-8"
+          - "oraclelinux-9"
+          - "rockylinux-8"
+          - "rockylinux-9"
           - "ubuntu-2004"
+          - "ubuntu-2204"
+          - "ubuntu-2404"
         suite:
           - "default"
       fail-fast: false
@@ -42,7 +53,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
       - name: Install Chef
-        uses: actionshub/chef-install@main
+        uses: sous-chefs/.github/.github/actions/install-workstation@9.0.1
       - name: Dokken
         uses: actionshub/test-kitchen@main
         env:
@@ -59,7 +70,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
       - name: Install Chef
-        uses: actionshub/chef-install@main
+        uses: sous-chefs/.github/.github/actions/install-workstation@9.0.1
       - name: Kitchen Converge
         uses: actionshub/test-kitchen@main
         env:
